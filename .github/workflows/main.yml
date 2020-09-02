@@ -13,11 +13,11 @@ jobs:
       run: echo "::set-env name=SHORT_SHA::$(echo ${GITHUB_SHA} | cut -c1-8)"
     - name: Install dependencies
       run: |
-        sudo apt-get install build-essential git libpng-dev gdebi-core wget
-        wget https://github.com/devkitPro/pacman/releases/download/v1.0.2/devkitpro-pacman.amd64.deb
-        sudo gdebi --n devkitpro-pacman.amd64.deb
-        sudo (dkp-)pacman -Syu
-        sudo (dkp-)pacman -S gba-dev
+        sudo apt-get install build-essential git libpng-dev gdebi-core autoconf automake bison flex libncurses5-dev
+        libreadline-dev texinfo pkg-config libgmp-dev libmpfr-dev libmpc-dev
+        git clone https://github.com/devkitPro/buildscripts.git
+        pushd buildscripts
+        sh ./build-devkit.sh
         popd
     - name: Build bbabiack/pokeemerald
       run: |
