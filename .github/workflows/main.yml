@@ -1,0 +1,67 @@
+name: Nightly build
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set environment variables
+      run: echo "::set-env name=SHORT_SHA::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    - name: Install dependencies
+      run: |
+        sudo apt-get install build-essential git libpng-dev gdebi-core
+        sudo gdebi devkitpro-pacman.deb
+        sudo (dkp-)pacman -Syu
+        sudo (dkp-)pacman -S gba-dev
+        popd
+    - name: Build bbabiack/polishedcrystal
+      run: |
+        git clone https://github.com/bbabiack/pokeemerald.git
+        git clone https://github.com/pret/agbcc
+        pushd agbcc
+        ./build.sh
+        ./install.sh ../pokeemerald
+        pushd pokeemerald
+        mkdir build
+        make
+        make tidy
+        popd
+    - name: Delete old release
+      id: delete_release
+      uses: jagger27/delete-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: beta-nightly
+    - name: Advance nightly tag to master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pushd pokeemerald
+        git tag beta-nightly -f
+        git push --tags -f "https://bbabiack:$GITHUB_TOKEN@github.com/bbabiack/pokeemerald.git"
+        popd
+    - name: Create new release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: beta-nightly
+        release_name: beta nightly
+        draft: false
+        prerelease: true
+    - name: Upload ROM
+      id: upload
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./pokeemerald/build/pokeemerald.gba
+        asset_name: pokeemerald-beta-${{ env.SHORT_SHA }}.gba
+        asset_content_type: application/octet-stream
