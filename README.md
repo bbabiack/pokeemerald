@@ -1,3 +1,3 @@
 # Pokémon Emerald
 
-Fork of pret/pokeemerald
+Fork of **[pret/pokeemerald](https://github.com/pret/pokeemerald)**
