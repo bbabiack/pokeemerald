@@ -4,6 +4,7 @@
 #include "constants/rgb.h"
 #include "util.h"
 #include "event_object_movement.h"
+#include "field_camera.h"
 #include "field_weather.h"
 #include "main.h"
 #include "menu.h"
@@ -226,6 +227,7 @@ static void Task_WeatherInit(u8 taskId)
     if (gWeatherPtr->readyForInit)
     {
         sWeatherFuncs[gWeatherPtr->currWeather].initAll();
+        UpdateCameraPanning();
         gTasks[taskId].func = Task_WeatherMain;
     }
 }
