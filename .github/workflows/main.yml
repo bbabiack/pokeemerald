@@ -15,7 +15,7 @@ jobs:
       run: |
         sudo apt-get install build-essential git libpng-dev gdebi-core wget
         wget https://github.com/devkitPro/pacman/releases/download/v1.0.2/devkitpro-pacman.amd64.deb
-        sudo gdebi devkitpro-pacman.amd64.deb
+        sudo gdebi --n devkitpro-pacman.amd64.deb
         sudo (dkp-)pacman -Syu
         sudo (dkp-)pacman -S gba-dev
         popd
