@@ -1098,7 +1098,7 @@ bool32 TryStartMatchCall(void)
     return FALSE;
 }
 
-void StartMatchCallFromScript(u8 *message)
+void StartMatchCallFromScript(const u8 *message)
 {
     gMatchCallState.triggeredFromScript = 1;
     StartMatchCall();
@@ -1119,7 +1119,7 @@ static void StartMatchCall(void)
         sub_808BCF4();
     }
 
-    PlaySE(SE_TOREEYE);
+    PlaySE(SE_POKENAV_CALL);
     CreateTask(ExecuteMatchCall, 1);
 }
 
@@ -1182,7 +1182,7 @@ static bool32 LoadMatchCallWindowGfx(u8 taskId)
         return FALSE;
     }
 
-    if (!decompress_and_copy_tile_data_to_vram(0, sPokeNavIconGfx, 0, 0x279, 0))
+    if (!DecompressAndCopyTileDataToVram(0, sPokeNavIconGfx, 0, 0x279, 0))
     {
         RemoveWindow(taskData[2]);
         DestroyTask(taskId);
@@ -1199,7 +1199,7 @@ static bool32 LoadMatchCallWindowGfx(u8 taskId)
 static bool32 MoveMatchCallWindowToVram(u8 taskId)
 {
     s16 *taskData = gTasks[taskId].data;
-    if (free_temp_tile_data_buffers_if_possible())
+    if (FreeTempTileDataBuffersIfPossible())
         return FALSE;
 
     PutWindowTilemap(taskData[2]);
@@ -1257,7 +1257,7 @@ static bool32 sub_8196330(u8 taskId)
     {
         FillWindowPixelBuffer(taskData[2], PIXEL_FILL(8));
         CopyWindowToVram(taskData[2], 2);
-        PlaySE(SE_TOREOFF);
+        PlaySE(SE_POKENAV_HANG_UP);
         return TRUE;
     }
 
@@ -1335,7 +1335,7 @@ static void InitMatchCallTextPrinter(int windowId, const u8 *str)
     printerTemplate.currentY = 1;
     printerTemplate.letterSpacing = 0;
     printerTemplate.lineSpacing = 0;
-    printerTemplate.unk = 0;
+    printerTemplate.style = 0;
     printerTemplate.fgColor = 10;
     printerTemplate.bgColor = 8;
     printerTemplate.shadowColor = 14;
