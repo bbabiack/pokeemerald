@@ -14,11 +14,11 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get install build-essential git libpng-dev gdebi-core
-        sudo gdebi devkitpro-pacman.deb
+        sudo gdebi devkitpro-pacman.amd64.deb
         sudo (dkp-)pacman -Syu
         sudo (dkp-)pacman -S gba-dev
         popd
-    - name: Build bbabiack/polishedcrystal
+    - name: Build bbabiack/pokeemerald
       run: |
         git clone https://github.com/bbabiack/pokeemerald.git
         git clone https://github.com/pret/agbcc
