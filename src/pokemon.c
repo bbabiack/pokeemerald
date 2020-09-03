@@ -3287,42 +3287,41 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
             // any weather except sun weakens solar beam
             if ((gBattleWeather & (WEATHER_RAIN_ANY | WEATHER_SANDSTORM_ANY | WEATHER_HAIL_ANY)) && gCurrentMove == MOVE_SOLAR_BEAM)
                 damage /= 2;
-
-           
         }
+
     }
     // are effects of weather negated with cloud nine or air lock
-            if (WEATHER_HAS_EFFECT2)
+    if (WEATHER_HAS_EFFECT2)
+    {
+        if (gBattleWeather & WEATHER_RAIN_TEMPORARY)
+        {
+            switch (type)
             {
-                if (gBattleWeather & WEATHER_RAIN_TEMPORARY)
-                {
-                    switch (type)
-                    {
-                    case TYPE_FIRE:
-                        damage /= 2;
-                        break;
-                    case TYPE_WATER:
-                        damage = (15 * damage) / 10;
-                        break;
-                    }
-                }
+            case TYPE_FIRE:
+                damage /= 2;
+                break;
+            case TYPE_WATER:
+                damage = (15 * damage) / 10;
+                break;
             }
-             // sunny
-            if (gBattleWeather & WEATHER_SUN_ANY)
-            {
-                switch (type)
-                {
-                case TYPE_FIRE:
-                    damage = (15 * damage) / 10;
-                    break;
-                case TYPE_WATER:
-                    damage /= 2;
-                    break;
-                }
-            }
-            // flash fire triggered
-        if ((gBattleResources->flags->flags[battlerIdAtk] & RESOURCE_FLAG_FLASH_FIRE) && type == TYPE_FIRE)
-            damage = (15 * damage) / 10;   
+        }
+    }
+    // sunny
+    if (gBattleWeather & WEATHER_SUN_ANY)
+    {
+        switch (type)
+        {
+        case TYPE_FIRE:
+            damage = (15 * damage) / 10;
+            break;
+        case TYPE_WATER:
+            damage /= 2;
+            break;
+        }
+    }
+    // flash fire triggered
+    if ((gBattleResources->flags->flags[battlerIdAtk] & RESOURCE_FLAG_FLASH_FIRE) && type == TYPE_FIRE)
+        damage = (15 * damage) / 10;   
     return damage + 2;
 }
 
