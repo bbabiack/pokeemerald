@@ -11,7 +11,7 @@ struct TrainerBall
 {
     u8 classId;
     u8 Ball; //make this u16 if needed
-}
+};
 
 struct UnknownPokemonStruct4
 {
