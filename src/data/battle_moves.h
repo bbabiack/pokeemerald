@@ -1090,7 +1090,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
         .flags = FLAG_PROTECT_AFFECTED | FLAG_MAGICCOAT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
-        .physicality = MOVE_PHYSICALITY_OTHER,,
+        .physicality = MOVE_PHYSICALITY_OTHER,
     },
 
     [MOVE_STUN_SPORE] =
@@ -4311,7 +4311,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
         .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
-        .physicality = MOVE_PHYSICALITY_SPECIAL,,
+        .physicality = MOVE_PHYSICALITY_SPECIAL,
     },
 
     [MOVE_HYDRO_CANNON] =
@@ -4507,7 +4507,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
         .flags = FLAG_PROTECT_AFFECTED | FLAG_MAGICCOAT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
-        .physicality = MOVE_PHYSICALITY_PTJER,
+        .physicality = MOVE_PHYSICALITY_OTHER,
     },
 
     [MOVE_COSMIC_POWER] =
